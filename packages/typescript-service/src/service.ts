@@ -2,7 +2,7 @@ import ts from "typescript";
 import { createDiagnosticWriter } from "./diagnostics";
 import { ProjectConfigLoader } from "./config";
 import { Project } from "./project";
-import { createResolvers } from "./resolve";
+import { ResolverImpl } from "./resolve";
 
 export class Service {
   private documentRegistry;
@@ -24,7 +24,8 @@ export class Service {
 
   openProject(configFileName: string): Project {
     const config = this.projectConfigLoader.load(configFileName);
-    const resolvers = createResolvers(config.options);
+    // TODO: move this into the CLI code where you know about Metro; keep utility methods in this package and import them into CLI for building up the Resolvers implementation
+    const resolvers = new ResolverImpl(config.options);
     return new Project(
       this.documentRegistry,
       this.diagnosticWriter,

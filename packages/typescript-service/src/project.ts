@@ -7,6 +7,7 @@ import { isNonEmptyArray } from "./util";
 
 export class Project {
   private diagnosticWriter: DiagnosticWriter;
+  private resolvers: Resolvers;
   private projectConfig: ProjectConfig;
 
   private projectFiles: ProjectFileCache;
@@ -21,6 +22,7 @@ export class Project {
     projectConfig: ProjectConfig
   ) {
     this.diagnosticWriter = diagnosticWriter;
+    this.resolvers = resolvers;
     this.projectConfig = projectConfig;
 
     this.projectFiles = new ProjectFileCache(projectConfig.fileNames);
@@ -68,10 +70,15 @@ export class Project {
        *
        * If this is implemented, `getResolvedModuleWithFailedLookupLocationsFromCache` should be too.
        */
-      resolveModuleNames: resolvers.resolveModuleNames,
+      resolveModuleNames: this.resolvers.resolveModuleNames.bind(
+        this.resolvers
+      ),
       getResolvedModuleWithFailedLookupLocationsFromCache:
-        resolvers.getResolvedModuleWithFailedLookupLocationsFromCache,
-      resolveTypeReferenceDirectives: resolvers.resolveTypeReferenceDirectives,
+        this.resolvers.getResolvedModuleWithFailedLookupLocationsFromCache.bind(
+          this.resolvers
+        ),
+      resolveTypeReferenceDirectives:
+        this.resolvers.resolveTypeReferenceDirectives.bind(this.resolvers),
 
       /*
        * Required for full import and type reference completions.
@@ -157,20 +164,38 @@ export class Project {
     return this.projectFiles.has(fileName);
   }
 
-  addFile(fileName: string): boolean {
-    return this.projectFiles.add(fileName);
+  addFile(
+    fileName: string,
+    dependencies: {
+      [moduleName: string]: string; // moduleName -> absolute path
+    }
+  ): boolean {
+    const addedToCache = this.projectFiles.add(fileName);
+    const addedToResolver = this.resolvers.addFile(fileName, dependencies);
+    return addedToCache && addedToResolver;
   }
 
-  updateFile(fileName: string, snapshot?: ts.IScriptSnapshot): boolean {
-    return this.projectFiles.update(fileName, snapshot);
+  updateFile(
+    fileName: string,
+    dependencies: {
+      [moduleName: string]: string; // moduleName -> absolute path
+    },
+    snapshot?: ts.IScriptSnapshot
+  ): boolean {
+    const updatedCache = this.projectFiles.update(fileName, snapshot);
+    const updatedResolver = this.resolvers.updateFile(fileName, dependencies);
+    return updatedCache && updatedResolver;
   }
 
   removeFile(fileName: string): boolean {
-    return this.projectFiles.delete(fileName);
+    const removedFromCache = this.projectFiles.delete(fileName);
+    const removedFromResolver = this.resolvers.removeFile(fileName);
+    return removedFromCache && removedFromResolver;
   }
 
   removeAllFiles(): void {
     this.projectFiles.deleteAll();
+    this.resolvers.removeAllFiles();
   }
 
   dispose(): void {
