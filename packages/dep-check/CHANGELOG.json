@@ -2,6 +2,81 @@
   "name": "@rnx-kit/dep-check",
   "entries": [
     {
+      "date": "Tue, 17 Aug 2021 09:36:56 GMT",
+      "tag": "@rnx-kit/dep-check_v1.6.0",
+      "version": "1.6.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@rnx-kit/dep-check",
+            "comment": "Add command for setting react-native version",
+            "commit": "150ed8e6ffca098c9bb72f5cd9e466a6d3ee393b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 13 Aug 2021 13:30:40 GMT",
+      "tag": "@rnx-kit/dep-check_v1.5.21",
+      "version": "1.5.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@rnx-kit/dep-check",
+            "comment": "Correct hermes-engine version for react-native 0.65",
+            "commit": "74979015c3e51ca33e9c66a411e4457a9e1edd49"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Aug 2021 22:07:45 GMT",
+      "tag": "@rnx-kit/dep-check_v1.5.20",
+      "version": "1.5.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "afoxman@microsoft.com",
+            "package": "@rnx-kit/dep-check",
+            "commit": "f8f9598f2be6df361dd6adb06921a05a46a1230b",
+            "comment": "Bump @rnx-kit/dep-check to v1.5.20"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Aug 2021 18:05:53 GMT",
+      "tag": "@rnx-kit/dep-check_v1.5.19",
+      "version": "1.5.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "afoxman@microsoft.com",
+            "package": "@rnx-kit/dep-check",
+            "commit": "e0c49e3c2e2acb7327f81f42d3023667b3887b93",
+            "comment": "Bump @rnx-kit/dep-check to v1.5.19"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Aug 2021 10:08:23 GMT",
+      "tag": "@rnx-kit/dep-check_v1.5.18",
+      "version": "1.5.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@rnx-kit/dep-check",
+            "commit": "1d13d5df2ec61bb3426521199cde4e588cb849b1",
+            "comment": "Bump @rnx-kit/dep-check to v1.5.18"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Jul 2021 19:42:04 GMT",
       "tag": "@rnx-kit/dep-check_v1.5.17",
       "version": "1.5.17",

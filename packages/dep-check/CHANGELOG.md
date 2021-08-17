@@ -1,8 +1,48 @@
 # Change Log - @rnx-kit/dep-check
 
-This log was last generated on Thu, 29 Jul 2021 19:42:04 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Aug 2021 09:36:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.0
+
+Tue, 17 Aug 2021 09:36:56 GMT
+
+### Minor changes
+
+- Add command for setting react-native version (4123478+tido64@users.noreply.github.com)
+
+## 1.5.21
+
+Fri, 13 Aug 2021 13:30:40 GMT
+
+### Patches
+
+- Correct hermes-engine version for react-native 0.65 (4123478+tido64@users.noreply.github.com)
+
+## 1.5.20
+
+Fri, 06 Aug 2021 22:07:45 GMT
+
+### Patches
+
+- Bump @rnx-kit/dep-check to v1.5.20 (afoxman@microsoft.com)
+
+## 1.5.19
+
+Fri, 06 Aug 2021 18:05:53 GMT
+
+### Patches
+
+- Bump @rnx-kit/dep-check to v1.5.19 (afoxman@microsoft.com)
+
+## 1.5.18
+
+Wed, 04 Aug 2021 10:08:23 GMT
+
+### Patches
+
+- Bump @rnx-kit/dep-check to v1.5.18 (4123478+tido64@users.noreply.github.com)
 
 ## 1.5.17
 

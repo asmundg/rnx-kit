@@ -1,4 +1,6 @@
 import type { Config as CLIConfig } from "@react-native-community/cli-types";
+import { run as runJest } from "jest-cli";
+import path from "path";
 import { parsePlatform } from "./parsers";
 
 type Args = {
@@ -23,31 +25,38 @@ export function rnxTest(
   _config: CLIConfig,
   { platform }: Args
 ): void {
-  const platformIndex = process.argv.indexOf("--platform");
+  const commandIndex = process.argv.indexOf(COMMAND_NAME);
+  if (commandIndex < 0) {
+    throw new Error("Failed to parse command arguments");
+  }
+
+  // Copy and remove the first arguments from `node react-native rnx-test ...`
+  const argv = process.argv.slice(commandIndex + 1);
+
+  const platformIndex = argv.indexOf("--platform");
   if (platformIndex < 0) {
     throw new Error("A target platform must be specified");
   }
 
-  const originalArgv = process.argv.slice();
-
   // Remove `--platform` otherwise Jest will complain about an unrecognized
-  // option.
-  process.argv.splice(platformIndex, 2);
-
-  // Remove `rnx-test` otherwise Jest will think it's a regex for test files.
-  process.argv.splice(process.argv.indexOf(COMMAND_NAME), 1);
+  // option. We can pass the rest of the arguments to Jest as they are.
+  argv.splice(platformIndex, 2);
 
   process.env["RN_TARGET_PLATFORM"] = platform;
-  require("jest-cli/bin/jest");
-
-  // Restore `argv` otherwise `@react-native-community/cli` will think we tried
-  // to show help message.
-  process.argv.length = 0;
-  process.argv.push(...originalArgv);
+  runJest(argv);
 }
 
-export function jestOptions(): Options[] {
-  const { options } = require("jest-cli/build/cli/args");
+function jestOptions(): Options[] {
+  // Starting with Jest 27, we are getting this error:
+  //
+  // Package subpath './build/cli/args' is not defined by "exports" in
+  // /~/node_modules/jest-cli/package.json
+  //
+  // To work around this, resolve `jest-cli` first, then use the resolved path
+  // to import `./build/cli/args`.
+  const jestPath = require.resolve("jest-cli/package.json");
+  const { options } = require(`${path.dirname(jestPath)}/build/cli/args`);
+
   return Object.keys(options).map((option) => {
     const { default: defaultValue, description, type } = options[option];
     return {
